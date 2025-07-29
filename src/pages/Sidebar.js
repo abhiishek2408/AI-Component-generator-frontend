@@ -16,7 +16,7 @@ function DashboardEditor() {
   useEffect(() => {
     const fetchSessions = async () => {
       try {
-        const res = await axios.get('http://localhost:3000/api/session/my-sessions', {
+        const res = await axios.get('https://ai-component-generator-backend-0e8d.onrender.com/api/session/my-sessions', {
           headers: { Authorization: `Bearer ${token}` },
         });
         setSessions(res.data);
@@ -31,7 +31,7 @@ function DashboardEditor() {
 
   const createSession = async () => {
     try {
-      const res = await axios.post('http://localhost:3000/api/session/create', {}, {
+      const res = await axios.post('https://ai-component-generator-backend-0e8d.onrender.com/api/session/create', {}, {
         headers: { Authorization: `Bearer ${token}` },
       });
       navigate(`/editor/${res.data._id}`);
@@ -45,7 +45,7 @@ function DashboardEditor() {
     const loadChat = async () => {
       if (!sessionId) return;
       try {
-        const res = await axios.get(`http://localhost:3000/api/session/${sessionId}`, {
+        const res = await axios.get(`https://ai-component-generator-backend-0e8d.onrender.com/api/session/${sessionId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setChat(res.data.chatHistory || []);

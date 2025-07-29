@@ -25,7 +25,7 @@ function EditorPage() {
       headers: {
         'Authorization': 'Bearer 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',
         'Content-Type': 'application/json',
-        'HTTP-Referer': 'http://localhost:3000',
+        'HTTP-Referer': 'https://ai-component-generator-backend-0e8d.onrender.com/',
       },
       body: JSON.stringify({
         model: 'openai/gpt-3.5-turbo',
@@ -96,7 +96,7 @@ saveSession(cleanChat, parsed.jsx, parsed.css);
       }
 
       try {
-        const res = await axios.get(`http://localhost:3000/api/session/${sessionId}`, {
+        const res = await axios.get(`https://ai-component-generator-backend-0e8d.onrender.com/api/session/${sessionId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -127,7 +127,7 @@ saveSession(cleanChat, parsed.jsx, parsed.css);
   const saveSession = async (chatHistory, jsx, css) => {
   try {
     await axios.put(
-      `http://localhost:3000/api/session/${sessionId}`,
+      `https://ai-component-generator-backend-0e8d.onrender.com/api/session/${sessionId}`,
       {
         chatHistory,
         code: { jsx, css },
