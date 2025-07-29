@@ -13,7 +13,7 @@ function EditorPage() {
   const [activeTab, setActiveTab] = useState('jsx');
 
 
-  const sendPrompt = async () => {
+const sendPrompt = async () => {
   if (!input.trim()) return;
 
   const userPrompt = input;
@@ -45,7 +45,6 @@ ONLY respond with EXACTLY this JSON (no markdown, no explanations):
 - Do NOT escape quotes or add comments
 - Respond ONLY with the raw JSON object
 `,
-
           },
         ],
       }),
@@ -65,28 +64,25 @@ ONLY respond with EXACTLY this JSON (no markdown, no explanations):
       return;
     }
 
-const newChat = [
-  ...chat,
-  { role: 'user', text: userPrompt },
-  { role: 'assistant', text: 'Component generated!' },
-];
+    const newChat = [
+      ...chat,
+      { role: 'user', text: userPrompt },
+      { role: 'assistant', text: 'Component generated!' },
+    ];
 
-const cleanChat = newChat.filter(
-  (msg) => msg?.role && msg?.text
-);
+    const cleanChat = newChat.filter((msg) => msg?.role && msg?.text);
 
-setChat(cleanChat);
-setJsxCode(parsed.jsx);
-setCssCode(parsed.css);
+    setChat(cleanChat);
+    setJsxCode(parsed.jsx);
+    setCssCode(parsed.css);
 
-
-saveSession(cleanChat, parsed.jsx, parsed.css);
-
+    saveSession(cleanChat, parsed.jsx, parsed.css);
   } catch (error) {
     console.error('AI Error:', error);
     alert('Failed to connect to AI model');
   }
 };
+
 
 
   useEffect(() => {
