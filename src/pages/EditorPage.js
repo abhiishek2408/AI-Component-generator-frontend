@@ -25,7 +25,6 @@ function EditorPage() {
       headers: {
         'Authorization': 'Bearer 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',
         'Content-Type': 'application/json',
-        'HTTP-Referer': 'https://ai-component-generator-frontend-mocha.vercel.app',
       },
       body: JSON.stringify({
         model: 'openai/gpt-3.5-turbo',
