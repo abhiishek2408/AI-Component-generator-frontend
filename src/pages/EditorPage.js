@@ -23,7 +23,7 @@ const sendPrompt = async () => {
     const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': 'Bearer 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',
+        'Authorization': 'Bearer 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',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
