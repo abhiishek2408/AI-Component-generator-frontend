@@ -32,19 +32,21 @@ function EditorPage() {
         messages: [
           {
             role: 'system',
-            content: 'You generate clean React JSX and CSS based on prompts. Do not explain.',
-          },
-          {
-            role: 'user',
             content: `Prompt: ${userPrompt}
 
-Respond ONLY with a strict JSON object:
+ONLY respond with EXACTLY this JSON (no markdown, no explanations):
+
 {
   "jsx": "<JSX code>",
   "css": "<CSS code>"
 }
 
-No markdown, no \\\\, no explanations — JSON only.`,
+- Do NOT add markdown (\`\`\`)
+- Do NOT add extra text
+- Do NOT escape quotes or add comments
+- Respond ONLY with the raw JSON object
+`,
+
           },
         ],
       }),
