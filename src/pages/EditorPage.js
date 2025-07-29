@@ -13,6 +13,9 @@ function EditorPage() {
   const [activeTab, setActiveTab] = useState('jsx');
 
 
+
+
+
 const sendPrompt = async () => {
   if (!input.trim()) return;
 
@@ -23,28 +26,32 @@ const sendPrompt = async () => {
     const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': 'Bearer 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',
+        'Authorization': 'Bearer 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', // Use actual key
         'Content-Type': 'application/json',
+        'HTTP-Referer': 'https://ai-component-generator-frontend-mocha.vercel.app',
       },
       body: JSON.stringify({
-        model: 'openai/gpt-3.5-turbo',
+        model: 'anthropic/claude-3-haiku', // Use this model for clean JSON
         messages: [
           {
             role: 'system',
-            content: `Prompt: ${userPrompt}
+            content: `You are a React component generator.
 
-ONLY respond with EXACTLY this JSON (no markdown, no explanations):
-
+Only respond with this raw JSON structure:
 {
   "jsx": "<JSX code>",
   "css": "<CSS code>"
 }
 
-- Do NOT add markdown (\`\`\`)
-- Do NOT add extra text
-- Do NOT escape quotes or add comments
-- Respond ONLY with the raw JSON object
-`,
+- No markdown
+- No explanations
+- No escaped quotes
+- No backslashes
+- No extra text or formatting`,
+          },
+          {
+            role: 'user',
+            content: userPrompt,
           },
         ],
       }),
@@ -55,9 +62,12 @@ ONLY respond with EXACTLY this JSON (no markdown, no explanations):
 
     let parsed;
     try {
-      const jsonMatch = reply.match(/{[\s\S]*}/);
-      if (!jsonMatch) throw new Error('No valid JSON in reply');
-      parsed = JSON.parse(jsonMatch[0]);
+      const jsonStart = reply.indexOf('{');
+      const jsonEnd = reply.lastIndexOf('}');
+      if (jsonStart === -1 || jsonEnd === -1) throw new Error('No JSON structure detected');
+
+      const jsonString = reply.substring(jsonStart, jsonEnd + 1);
+      parsed = JSON.parse(jsonString);
     } catch (e) {
       console.error('AI raw reply:', reply);
       alert('AI did not return valid JSON. Try a simpler prompt or switch models.');
@@ -77,11 +87,13 @@ ONLY respond with EXACTLY this JSON (no markdown, no explanations):
     setCssCode(parsed.css);
 
     saveSession(cleanChat, parsed.jsx, parsed.css);
+
   } catch (error) {
     console.error('AI Error:', error);
     alert('Failed to connect to AI model');
   }
 };
+
 
 
 
